@@ -1,0 +1,48 @@
+<resources>
+    <string name="app_name">My Application Sixth</string>
+    <string name="about_app_fragment">About app blank fragment</string>
+    <string name="item_description">description</string>
+    <string name="item_title">title</string>
+    <string name="item_type_one">Type 1</string>
+    <string name="item_type_two">Type 2</string>
+    <string name="item_save">save</string>
+    <string name="item_action">action</string>
+    <string name="item_id">id</string>
+    <string name="home">Home</string>
+    <string name="about_app">About application</string>
+    <string name="header">Header</string>
+    <string name="nav_open">Open</string>
+    <string name="nav_close">Close</string>
+    <string name="close">Close</string>
+    <string name="sort">Sort</string>
+    <string name="open">Open</string>
+    <string name="input_etPeriod">Введите период</string>
+    <string name="input_etCount">Введите количество</string>
+    <string name="input_etTitle">Введите название</string>
+    <string name="input_etDescription">Введите описание</string>
+    <string name="input_etSearch">Введите запрос</string>
+    <string name="filter">Filter</string>
+    <string name="reset">reset</string>
+
+    <string name="action">Action</string>
+    <string name="id">Id</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="priority">Priority</string>
+    <string name="type">Type</string>
+    <string name="count">Count</string>
+    <string name="period">Period</string>
+
+    <string name="type_1">Type 1</string>
+    <string name="type_2">Type 2</string>
+
+    <string name="edit">Edit</string>
+    <string name="create">Create</string>
+
+    <string-array name="priorities">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    </resources>

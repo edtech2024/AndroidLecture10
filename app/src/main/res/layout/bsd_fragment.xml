@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name = "listViewModel"
+            type = "com.example.myapplicationsixth.presentation.ListViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bsdFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".BSDFragment">
+
+        <EditText
+            android:id="@+id/etSearch"
+            android:text="@={listViewModel.argSearch}"
+            android:hint="@string/input_etSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="@id/btnFilter"
+            app:layout_constraintTop_toTopOf="@id/btnSort"
+            app:layout_constraintBottom_toTopOf="@id/btnSort"/>
+
+        <Button
+            android:id="@+id/btnFilter"
+            android:text="@string/filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> listViewModel.callFilterMethod()}"
+            app:layout_constraintLeft_toLeftOf="@id/etSearch"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/btnReset"/>
+
+        <Button
+            android:id="@+id/btnSort"
+            android:text="@string/sort"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> listViewModel.callSortMethod()}"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="@id/btnReset"
+            app:layout_constraintTop_toBottomOf="@id/etSearch"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <Button
+            android:id="@+id/btnReset"
+            android:text="@string/reset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> listViewModel.callResetFilter()}"
+            app:layout_constraintLeft_toLeftOf="@id/btnSort"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etSearch"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
