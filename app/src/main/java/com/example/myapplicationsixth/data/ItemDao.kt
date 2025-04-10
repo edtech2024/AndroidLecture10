@@ -12,10 +12,10 @@ import com.example.myapplicationsixth.domain.Item
 interface ItemDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(item: Item)
+    suspend fun insert(item: Item)
 
     @Update
-    fun update(item: Item)
+    suspend fun update(item: Item)
 
     @Query("SELECT * FROM items")
     fun getAll(): LiveData<List<Item>>

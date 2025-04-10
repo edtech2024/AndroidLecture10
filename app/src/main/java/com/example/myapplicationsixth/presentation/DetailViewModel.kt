@@ -3,10 +3,12 @@ package com.example.myapplicationsixth.presentation
 import android.content.Context
 import android.os.Bundle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.myapplicationsixth.R
 import com.example.myapplicationsixth.data.ItemRepository
 import com.example.myapplicationsixth.domain.Item
 import com.example.myapplicationsixth.domain.StringValue
+import kotlinx.coroutines.launch
 
 
 class DetailViewModel(val repository: ItemRepository, val bundle: Bundle?, val context: DetailFragment.OnItemCreateUpdateListener?) : ViewModel() {
@@ -71,11 +73,15 @@ class DetailViewModel(val repository: ItemRepository, val bundle: Bundle?, val c
     override fun onCleared() {}
 
     private fun callCreateMethod(item: Item){
-        repository.insertItem(item)
+        viewModelScope.launch {
+            repository.insertItem(item)
+        }
     }
 
     private fun callUpdateMethod(item: Item){
-        repository.updateItem(item)
+        viewModelScope.launch {
+            repository.updateItem(item)
+        }
     }
 
     fun callClick(){

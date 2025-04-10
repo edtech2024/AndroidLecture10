@@ -5,11 +5,11 @@ import com.example.myapplicationsixth.domain.Item
 
 class ItemRepository(val itemDao: ItemDao) {
 
-    fun insertItem(item: Item) {
+    suspend fun insertItem(item: Item) {
         itemDao.insert(item)
     }
 
-    fun updateItem(item: Item) {
+    suspend fun updateItem(item: Item) {
         itemDao.update(item)
     }
 
