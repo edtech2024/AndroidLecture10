@@ -8,6 +8,7 @@ import com.example.myapplicationsixth.R
 import com.example.myapplicationsixth.data.ItemRepository
 import com.example.myapplicationsixth.domain.Item
 import com.example.myapplicationsixth.domain.StringValue
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
@@ -73,13 +74,13 @@ class DetailViewModel(val repository: ItemRepository, val bundle: Bundle?, val c
     override fun onCleared() {}
 
     private fun callCreateMethod(item: Item){
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             repository.insertItem(item)
         }
     }
 
     private fun callUpdateMethod(item: Item){
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             repository.updateItem(item)
         }
     }
