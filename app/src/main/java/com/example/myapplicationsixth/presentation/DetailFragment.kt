@@ -28,12 +28,17 @@ class DetailFragment : Fragment() {
         private const val TYPE = "TYPE"
         private const val COUNT = "Count"
         private const val PERIOD = "Period"
+        private const val UID = "Uid"
+        private const val FREQUENCY = "Frequency"
+        private const val COLOR = "Color"
+        private const val DATE = "Date"
 
         fun newInstance(
-            action: String?, id: Int,
+            action: String?, id: Int, uid: String?,
             title: String?, description: String?,
             priority: String?, type: String?,
             count: String?, period: String?,
+            frequency: String?, color: String?, date: String?
         ): DetailFragment {
             val fragmentDetail = DetailFragment()
             val args = Bundle()
@@ -46,6 +51,10 @@ class DetailFragment : Fragment() {
             args.putString(TYPE, type)
             args.putString(COUNT, count)
             args.putString(PERIOD, period)
+            args.putString(UID, uid)
+            args.putString(FREQUENCY, frequency)
+            args.putString(COLOR, color)
+            args.putString(DATE, date)
 
             fragmentDetail.arguments = args
             return fragmentDetail
@@ -55,9 +64,7 @@ class DetailFragment : Fragment() {
     // Define the events that the fragment will use to communicate
     interface OnItemCreateUpdateListener{
         // This can be any number of events to be sent to the activity
-        fun onCreateItem()
-
-        fun onUpdateItem()
+        fun onSaveItem()
     }
 
     // Define the listener of the interface type
@@ -114,24 +121,17 @@ class DetailFragment : Fragment() {
     }
 
     // Now we can fire the event when the user selects something in the fragment
-    private fun onCreateClicked(){
-        listenerCreateUpdate?.onCreateItem()
+    private fun onSaveClicked() {
+        listenerCreateUpdate?.onSaveItem()
     }
 
-    // Now we can fire the event when the user selects something in the fragment
-    private fun onUpdateClicked() {
-        listenerCreateUpdate?.onUpdateItem()
-    }
 
     private fun initializationButton(){
 
         binding.btnSave.setOnClickListener(){
-            detailViewModel.callClick()
-            if (detailViewModel.argAction == "Create"){
-                onCreateClicked()
-            } else {
-                onUpdateClicked()
-            }
+            detailViewModel.touchButton()
+
+            onSaveClicked()
         }
     }
 

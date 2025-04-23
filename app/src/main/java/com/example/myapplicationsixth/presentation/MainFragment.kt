@@ -19,7 +19,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 class MainFragment : Fragment() {
 
     // Creates a new fragment given parameters
-    // ListFragment.newInstance()
+    // MainFragment.newInstance()
     companion object {
 
         fun newInstance(): MainFragment {
@@ -93,13 +93,21 @@ class MainFragment : Fragment() {
     private fun initializationViewPager(){
         // When requested, this adapter returns a ObjectFragment,
         // representing an object in the collection.
-        binding.viewPager2.adapter = FragmentListStateAdapter(this )
+        binding.viewPager2.adapter = FragmentListStateAdapter(this, transferString() )
 
         TabLayoutMediator(binding.tabLayout, binding.viewPager2,
             TabLayoutMediator.TabConfigurationStrategy { tab, position ->
                 tab.text = getString(R.string.type) + "${(position + 1)}"
             }
         ).attach()
+    }
+
+    private fun transferString():String {
+        val args: String =
+            getString(R.string.type_1) + " " +
+            getString(R.string.type_2) + " " +
+            getString(R.string.error)
+        return args
     }
 
     private fun initializationFAB(){

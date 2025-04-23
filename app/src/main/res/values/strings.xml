@@ -32,9 +32,15 @@
     <string name="type">Type</string>
     <string name="count">Count</string>
     <string name="period">Period</string>
+    <string name="frequency">Frequency</string>
+    <string name="uid">Uid</string>
+    <string name="date">Date</string>
+    <string name="datetime">Введите дату и время</string>
+    <string name="color">Color</string>
 
     <string name="type_1">Type 1</string>
     <string name="type_2">Type 2</string>
+    <string name="error">Error</string>
 
     <string name="edit">Edit</string>
     <string name="create">Create</string>

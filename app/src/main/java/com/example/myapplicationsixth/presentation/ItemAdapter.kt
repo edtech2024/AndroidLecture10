@@ -23,7 +23,10 @@ class ItemAdapter(
             binding.tvItemPriority.text = item.priority.toString()
             binding.tvItemType.text = item.type.toString()
             binding.tvItemCount.text = item.count.toString()
-            binding.tvItemPeriod.text = item.period.toString()
+            binding.tvItemUId.text = item.uid.toString()
+            binding.tvItemFrequency.text = item.frequency.toString()
+            binding.tvItemDate.text = item.date.toString()
+            binding.tvItemColor.text = item.color.toString()
 
             binding.root.setOnClickListener {
                 onClicked(item)

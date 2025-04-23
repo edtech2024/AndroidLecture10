@@ -12,7 +12,8 @@ class ListViewModel(val repository: ItemRepository) : ViewModel() {
     private var mediatorType1: MediatorLiveData<List<Item>> = MediatorLiveData<List<Item>>()
     private var mediatorType2: MediatorLiveData<List<Item>> = MediatorLiveData<List<Item>>()
 
-    private var liveDataType: LiveData<List<Item>> = repository.callMethod()
+    private var liveDataType1: LiveData<List<Item>> = repository.queryItemsTypefromDatabase("Type 1")
+    private var liveDataType2: LiveData<List<Item>> = repository.queryItemsTypefromDatabase("Type 2")
 
     var tempListType1: MutableList<Item> = mutableListOf()
     var tempListType2: MutableList<Item> = mutableListOf()
@@ -22,34 +23,27 @@ class ListViewModel(val repository: ItemRepository) : ViewModel() {
 
     init {
 
-        mediatorType1.addSource(liveDataType) { source ->
-            for (item in source) {
-                if (item.type == "Type 1") {
-                    tempListType1.add(item)
-                    mediatorType1.setValue(tempListType1)
-                }
-            }
+        mediatorType1.addSource(liveDataType1) { source ->
+            tempListType1.addAll(source)
+            mediatorType1.setValue(tempListType1)
         }
 
-        mediatorType2.addSource(liveDataType) { source ->
-            for (item in source) {
-                if(item.type == "Type 2") {
-                    tempListType2.add(item)
-                    mediatorType2.setValue(tempListType2)
-                }
-            }
+        mediatorType2.addSource(liveDataType2) { source ->
+            tempListType2.addAll(source)
+            mediatorType2.setValue(tempListType2)
         }
+
     }
 
-    fun callSortMethod() {
+    fun applySortMethod() {
         sortByCount()
     }
 
-    fun callFilterMethod() {
+    fun applyFilterMethod() {
         filtrationByTitle(argSearch)
     }
 
-    fun callResetFilter() {
+    fun applyResetFilter() {
         argSearch = ""
         sortById()
 
@@ -74,10 +68,10 @@ class ListViewModel(val repository: ItemRepository) : ViewModel() {
     }
 
     fun filtrationByTitle(title: String){
-        var filteredListT1 = tempListType1.filter { it.title == title }
+        var filteredListT1 = tempListType1.filter { it.title!!.contains(title, ignoreCase = true) }
         mediatorType1.postValue(filteredListT1)
 
-        var filteredListT2 = tempListType2.filter { it.title == title }
+        var filteredListT2 = tempListType2.filter { it.title!!.contains(title, ignoreCase = true) }
         mediatorType2.postValue(filteredListT2)
     }
 

@@ -45,13 +45,7 @@ class MainActivity : AppCompatActivity(),
 
         if (savedInstanceState == null) {
             // Let's first dynamically add a fragment into a frame container
-            val fragmentTransaction: FragmentTransaction = supportFragmentManager.beginTransaction()
-            val fragmentMain: MainFragment = MainFragment.newInstance()
-            fragmentTransaction.replace(R.id.container, fragmentMain) // контейнер в активити
-            fragmentTransaction.addToBackStack(null)
-            fragmentTransaction.commit()
-
-            switchHamburger()
+            transactionToMainFragment()
         }
     }
 
@@ -96,20 +90,13 @@ class MainActivity : AppCompatActivity(),
     }
 
     private fun replaceMainFragment(){
-        val fragmentTransaction: FragmentTransaction = supportFragmentManager.beginTransaction()
-        val fragmentMain: MainFragment = MainFragment.newInstance()
-        fragmentTransaction.replace(R.id.container, fragmentMain) // контейнер в активити
-        fragmentTransaction.addToBackStack(null)
-        fragmentTransaction.commit()
-
-        switchHamburger()
+        transactionToMainFragment()
     }
 
     private fun replaceAboutAppFragment(){
         val fragmentTransaction: FragmentTransaction = supportFragmentManager.beginTransaction()
         val fragmentAboutApp: AboutAppFragment = AboutAppFragment.newInstance() // newInstance
         fragmentTransaction.replace(R.id.container, fragmentAboutApp) // контейнер в активити
-        fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
 
         switchHamburger()
@@ -127,10 +114,13 @@ class MainActivity : AppCompatActivity(),
             null,
             null,
             null,
+            null,
+            null,
+            null,
+            null,
             null
         )
         fragmentTransaction.replace(R.id.container, fragmentDetail) // контейнер в активити
-        fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
 
         switchBack()
@@ -139,40 +129,32 @@ class MainActivity : AppCompatActivity(),
     // Now we can define the action to take in the activity when the fragment event fires
     // This is implementing the `OnItemEditType1Listener` interface methods
     override fun onEditItemType1(edit: Bundle){
-        val fragmentTransaction: FragmentTransaction = supportFragmentManager.beginTransaction()
-        val fragmentDetail: DetailFragment = DetailFragment.newInstance(
-            edit.getString(applicationContext.getString(R.string.action)),
-            edit.getInt(applicationContext.getString(R.string.id)),
-            edit.getString(applicationContext.getString(R.string.title)),
-            edit.getString(applicationContext.getString(R.string.description)),
-            edit.getString(applicationContext.getString(R.string.priority)),
-            edit.getString(applicationContext.getString(R.string.type)),
-            edit.getString(applicationContext.getString(R.string.count)),
-            edit.getString(applicationContext.getString(R.string.period))
-        )
-        fragmentTransaction.replace(R.id.container, fragmentDetail)
-        fragmentTransaction.addToBackStack(null)
-        fragmentTransaction.commit()
-
-        switchBack()
+        onUpdateItem(edit)
     }
 
     // Now we can define the action to take in the activity when the fragment event fires
     // This is implementing the `OnItemEditType2Listener` interface methods
     override fun onEditItemType2(edit: Bundle){
+        onUpdateItem(edit)
+    }
+
+    fun onUpdateItem(edit: Bundle){
         val fragmentTransaction: FragmentTransaction = supportFragmentManager.beginTransaction()
         val fragmentDetail: DetailFragment = DetailFragment.newInstance(
             edit.getString(applicationContext.getString(R.string.action)),
             edit.getInt(applicationContext.getString(R.string.id)),
+            edit.getString(applicationContext.getString(R.string.uid)),
             edit.getString(applicationContext.getString(R.string.title)),
             edit.getString(applicationContext.getString(R.string.description)),
             edit.getString(applicationContext.getString(R.string.priority)),
             edit.getString(applicationContext.getString(R.string.type)),
             edit.getString(applicationContext.getString(R.string.count)),
-            edit.getString(applicationContext.getString(R.string.period))
+            edit.getString(applicationContext.getString(R.string.period)),
+            edit.getString(applicationContext.getString(R.string.frequency)),
+            edit.getString(applicationContext.getString(R.string.date)),
+            edit.getString(applicationContext.getString(R.string.color))
         )
         fragmentTransaction.replace(R.id.container, fragmentDetail)
-        fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
 
         switchBack()
@@ -180,23 +162,14 @@ class MainActivity : AppCompatActivity(),
 
     // Now we can define the action to take in the activity when the fragment event fires
     // This is implementing the `OnItemCreateUpdateListener` interface methods
-    override fun onCreateItem(){
-        val fragmentTransaction: FragmentTransaction = supportFragmentManager.beginTransaction()
-        val fragmentMain: MainFragment = MainFragment.newInstance()
-        fragmentTransaction.replace(R.id.container, fragmentMain) // контейнер в активити
-        fragmentTransaction.addToBackStack(null)
-        fragmentTransaction.commit()
-
-        switchHamburger()
+    override fun onSaveItem(){
+        transactionToMainFragment()
     }
 
-    // Now we can define the action to take in the activity when the fragment event fires
-    // This is implementing the `OnItemCreateUpdateListener` interface methods
-    override fun onUpdateItem(){
+    private fun transactionToMainFragment(){
         val fragmentTransaction: FragmentTransaction = supportFragmentManager.beginTransaction()
         val fragmentMain: MainFragment = MainFragment.newInstance()
         fragmentTransaction.replace(R.id.container, fragmentMain) // контейнер в активити
-        fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
 
         switchHamburger()

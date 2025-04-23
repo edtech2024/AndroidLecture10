@@ -10,25 +10,31 @@ import com.example.myapplicationsixth.domain.Item
 import com.example.myapplicationsixth.domain.StringValue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class DetailViewModel(val repository: ItemRepository, val bundle: Bundle?, val context: DetailFragment.OnItemCreateUpdateListener?) : ViewModel() {
 
     var argAction: String? = null
     var argId: Int? = null
-    var argTitle: String = "null"
+    var argTitle: String = ""
     var argDescription: String = "null"
     var argPriority: Int? = null
-    var argType: String = "null"
+    var argType: Int = 0
     var argType1: Boolean
     var argType2: Boolean
     var argCount: String = "null"
     var argPeriod: String = "null"
+    var argFrequency: String = "0"
+    var argColor: String = "0"
+    var argUid: String = ""
 
-    var flag: Boolean
+    var simpleDateFormat = SimpleDateFormat("ddMMyyyyHHmmss")
+    var argDate: Long = simpleDateFormat.format(Date()).toLong()
+    var argDateTime: String = simpleDateFormat.format(Date()).toString()
 
     init{
-        flag = true
         argType1 = false
         argType2 = false
 
@@ -40,67 +46,83 @@ class DetailViewModel(val repository: ItemRepository, val bundle: Bundle?, val c
     fun chooseTypeFirst(){
         argType1 = true
         argType2 = false
-        argType =  StringValue.StringResource(R.string.type_1).asString(context as Context)
+        argType =  0
     }
 
     fun chooseTypeSecond(){
         argType1 = false
         argType2 = true
-        argType = StringValue.StringResource(R.string.type_2).asString(context as Context)
+        argType = 1
     }
 
     private fun readBundle(bundle:Bundle){
+        extractingItemValues(bundle)
+        settingItemType()
+    }
+
+    private fun extractingItemValues(bundle:Bundle) {
         argAction = bundle.getString(StringValue.StringResource(R.string.action).asString(context as Context), "")
         argId = bundle.getInt(StringValue.StringResource(R.string.id).asString(context as Context),0 )
-        argTitle = bundle.getString(StringValue.StringResource(R.string.title).asString(context as Context), "Naming")
-        argDescription = bundle.getString(StringValue.StringResource(R.string.description).asString(context as Context), "...")
+        argTitle = bundle.getString(StringValue.StringResource(R.string.title).asString(context as Context), "Title")
+        argDescription = bundle.getString(StringValue.StringResource(R.string.description).asString(context as Context), "Description")
         argPriority = bundle.getString(StringValue.StringResource(R.string.priority).asString(context as Context), "2")?.toInt()
-        argType = bundle.getString(StringValue.StringResource(R.string.type).asString(context as Context), "Type 1")
+        argType = bundle.getString(StringValue.StringResource(R.string.type).asString(context as Context), "0").toInt()
+        argCount = bundle.getString(StringValue.StringResource(R.string.count).asString(context as Context), "0")
+        argFrequency = bundle.getString(StringValue.StringResource(R.string.frequency).asString(context as Context), "0")
+        argColor = bundle.getString(StringValue.StringResource(R.string.color).asString(context as Context), "0")
+        argUid = bundle.getString(StringValue.StringResource(R.string.uid).asString(context as Context), "")
+    }
 
-        if (argType != StringValue.StringResource(R.string.type_1).asString(context as Context)) {
+    private fun settingItemType(){
+        if (argType != 0) {
             argType2 = true
             argType1 = false
         }
-        if (argType != StringValue.StringResource(R.string.type_2).asString(context as Context)) {
+        if (argType != 1) {
             argType1 = true
             argType2 = false
         }
-
-        argCount = bundle.getString(StringValue.StringResource(R.string.count).asString(context as Context), "0")
-        argPeriod = bundle.getString(StringValue.StringResource(R.string.period).asString(context as Context), "0")
-
     }
 
     override fun onCleared() {}
 
-    private fun callCreateMethod(item: Item){
+    // Launching a new coroutine to insert the data in a non-blocking way
+    private fun clickButtonCreateItem(item: Item){
         viewModelScope.launch(Dispatchers.IO) {
-            repository.insertItem(item)
+            repository.addItem(item)
+            repository.requestItems()
+            repository.deleteItems()
+            repository.insertItems(repository.itemList.value!!)
         }
     }
 
-    private fun callUpdateMethod(item: Item){
+    // Launching a new coroutine to update the data in a non-blocking way
+    private fun clickButtonUpdateItem(item: Item){
         viewModelScope.launch(Dispatchers.IO) {
-            repository.updateItem(item)
+            repository.editItem(item)
+            repository.requestItems()
+            repository.deleteItems()
+            repository.insertItems(repository.itemList.value!!)
         }
     }
 
-    fun callClick(){
+    fun touchButton(){
         if (argAction == StringValue.StringResource(R.string.create).asString(context as Context)){
-            callCreateMethod(makeItem())
+            clickButtonCreateItem(makeItem())
         } else {
-            callUpdateMethod(makeItem())
+            clickButtonUpdateItem(makeItem())
         }
     }
 
     private fun makeItem(): Item {
 
-        if (argAction == StringValue.StringResource(R.string.create).asString(context as Context)) {
-            argId = null
-        }
-
-        val item = Item(argId, argTitle, argDescription,
-            argPriority, argType, argCount?.toInt(), argPeriod?.toInt()
+        val item = Item(id = null, uid = argUid,
+            title = argTitle, description = argDescription,
+            priority = argPriority,
+            type = argType.toInt(),
+            count = argCount?.toInt(),
+            frequency = argFrequency?.toInt(),
+            color = 0, date = argDate.toString().toLong()
         )
 
         return item

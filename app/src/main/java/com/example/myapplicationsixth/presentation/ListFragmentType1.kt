@@ -96,9 +96,12 @@ class ListFragmentType1 : Fragment() {
         args.putString(getString(R.string.title), item.title)
         args.putString(getString(R.string.description), item.description)
         args.putString(getString(R.string.priority), item.priority.toString())
-        args.putString(getString(R.string.type), item.type)
+        args.putString(getString(R.string.type), item.type.toString())
         args.putString(getString(R.string.count), item.count.toString())
-        args.putString(getString(R.string.period), item.period.toString())
+        args.putString(getString(R.string.frequency), item.frequency!!.toString())
+        args.putString(getString(R.string.uid), item.uid!!.toString())
+        args.putString(getString(R.string.date), item.date!!.toString())
+        args.putString(getString(R.string.color), item.color!!.toString())
 
         onEditClicked(args)
     }
