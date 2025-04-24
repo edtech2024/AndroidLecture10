@@ -32,7 +32,7 @@ class ItemRepository(val itemDao: ItemDao, val itemApiService: ItemApiInterface,
         }
     }
 
-    fun queryItemsTypefromDatabase(type: String): LiveData<List<Item>> {
+    fun queryItemsTypefromDatabase(type: Int): LiveData<List<Item>> {
         return itemDao.getAllItemsType(type)
     }
 

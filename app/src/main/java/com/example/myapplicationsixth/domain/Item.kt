@@ -66,9 +66,9 @@ data class Item public constructor(
             date: Long?
         ) = Item (
             id = id ?: null,
-            uid = uid ?: "0",
+            uid = uid ?: "",
             title = title ?: "Title",
-            description = description ?: "",
+            description = description ?: "Description",
             priority = priority ?: 0,
             type = type ?: 0,
             count = count ?: 0,

@@ -9,7 +9,9 @@ import com.example.myapplicationsixth.data.ItemRepository
 import com.example.myapplicationsixth.domain.Item
 import com.example.myapplicationsixth.domain.StringValue
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -63,14 +65,14 @@ class DetailViewModel(val repository: ItemRepository, val bundle: Bundle?, val c
     private fun extractingItemValues(bundle:Bundle) {
         argAction = bundle.getString(StringValue.StringResource(R.string.action).asString(context as Context), "")
         argId = bundle.getInt(StringValue.StringResource(R.string.id).asString(context as Context),0 )
-        argTitle = bundle.getString(StringValue.StringResource(R.string.title).asString(context as Context), "Title")
-        argDescription = bundle.getString(StringValue.StringResource(R.string.description).asString(context as Context), "Description")
+        argTitle = bundle.getString(StringValue.StringResource(R.string.title).asString(context as Context), "Title").toString()
+        argDescription = bundle.getString(StringValue.StringResource(R.string.description).asString(context as Context), "Description").toString()
         argPriority = bundle.getString(StringValue.StringResource(R.string.priority).asString(context as Context), "2")?.toInt()
         argType = bundle.getString(StringValue.StringResource(R.string.type).asString(context as Context), "0").toInt()
-        argCount = bundle.getString(StringValue.StringResource(R.string.count).asString(context as Context), "0")
-        argFrequency = bundle.getString(StringValue.StringResource(R.string.frequency).asString(context as Context), "0")
-        argColor = bundle.getString(StringValue.StringResource(R.string.color).asString(context as Context), "0")
-        argUid = bundle.getString(StringValue.StringResource(R.string.uid).asString(context as Context), "")
+        argCount = bundle.getString(StringValue.StringResource(R.string.count).asString(context as Context), "0").toString()
+        argFrequency = bundle.getString(StringValue.StringResource(R.string.frequency).asString(context as Context), "0").toString()
+        argColor = bundle.getString(StringValue.StringResource(R.string.color).asString(context as Context), "0").toString()
+        argUid = bundle.getString(StringValue.StringResource(R.string.uid).asString(context as Context), "").toString()
     }
 
     private fun settingItemType(){
@@ -89,20 +91,24 @@ class DetailViewModel(val repository: ItemRepository, val bundle: Bundle?, val c
     // Launching a new coroutine to insert the data in a non-blocking way
     private fun clickButtonCreateItem(item: Item){
         viewModelScope.launch(Dispatchers.IO) {
-            repository.addItem(item)
-            repository.requestItems()
-            repository.deleteItems()
-            repository.insertItems(repository.itemList.value!!)
+            withContext(NonCancellable) {
+                repository.addItem(item)
+                repository.requestItems()
+                repository.deleteItems()
+                repository.insertItems(repository.itemList.value!!)
+            }
         }
     }
 
     // Launching a new coroutine to update the data in a non-blocking way
     private fun clickButtonUpdateItem(item: Item){
         viewModelScope.launch(Dispatchers.IO) {
-            repository.editItem(item)
-            repository.requestItems()
-            repository.deleteItems()
-            repository.insertItems(repository.itemList.value!!)
+            withContext(NonCancellable) {
+                repository.editItem(item)
+                repository.requestItems()
+                repository.deleteItems()
+                repository.insertItems(repository.itemList.value!!)
+            }
         }
     }
 

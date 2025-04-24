@@ -12,8 +12,8 @@ class ListViewModel(val repository: ItemRepository) : ViewModel() {
     private var mediatorType1: MediatorLiveData<List<Item>> = MediatorLiveData<List<Item>>()
     private var mediatorType2: MediatorLiveData<List<Item>> = MediatorLiveData<List<Item>>()
 
-    private var liveDataType1: LiveData<List<Item>> = repository.queryItemsTypefromDatabase("Type 1")
-    private var liveDataType2: LiveData<List<Item>> = repository.queryItemsTypefromDatabase("Type 2")
+    private var liveDataType1: LiveData<List<Item>> = repository.queryItemsTypefromDatabase(0)
+    private var liveDataType2: LiveData<List<Item>> = repository.queryItemsTypefromDatabase(1)
 
     var tempListType1: MutableList<Item> = mutableListOf()
     var tempListType2: MutableList<Item> = mutableListOf()

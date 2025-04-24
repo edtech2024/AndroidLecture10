@@ -21,7 +21,7 @@ interface ItemDao {
     suspend fun update(item: Item)
 
     @Query("SELECT * FROM items WHERE type = :itemType")
-    fun getAllItemsType(itemType: String): LiveData<List<Item>>
+    fun getAllItemsType(itemType: Int): LiveData<List<Item>>
 
     @Query("DELETE FROM items")
     suspend fun deleteAll()
