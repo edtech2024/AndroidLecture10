@@ -65,14 +65,14 @@ class DetailViewModel(val repository: ItemRepository, val bundle: Bundle?, val c
     private fun extractingItemValues(bundle:Bundle) {
         argAction = bundle.getString(StringValue.StringResource(R.string.action).asString(context as Context), "")
         argId = bundle.getInt(StringValue.StringResource(R.string.id).asString(context as Context),0 )
-        argTitle = bundle.getString(StringValue.StringResource(R.string.title).asString(context as Context), "Title").toString()
-        argDescription = bundle.getString(StringValue.StringResource(R.string.description).asString(context as Context), "Description").toString()
+        argTitle = bundle.getString(StringValue.StringResource(R.string.title).asString(context as Context), "Title")
+        argDescription = bundle.getString(StringValue.StringResource(R.string.description).asString(context as Context), "Description")
         argPriority = bundle.getString(StringValue.StringResource(R.string.priority).asString(context as Context), "2")?.toInt()
         argType = bundle.getString(StringValue.StringResource(R.string.type).asString(context as Context), "0").toInt()
-        argCount = bundle.getString(StringValue.StringResource(R.string.count).asString(context as Context), "0").toString()
-        argFrequency = bundle.getString(StringValue.StringResource(R.string.frequency).asString(context as Context), "0").toString()
-        argColor = bundle.getString(StringValue.StringResource(R.string.color).asString(context as Context), "0").toString()
-        argUid = bundle.getString(StringValue.StringResource(R.string.uid).asString(context as Context), "").toString()
+        argCount = bundle.getString(StringValue.StringResource(R.string.count).asString(context as Context), "0")
+        argFrequency = bundle.getString(StringValue.StringResource(R.string.frequency).asString(context as Context), "0")
+        argColor = bundle.getString(StringValue.StringResource(R.string.color).asString(context as Context), "0")
+        argUid = bundle.getString(StringValue.StringResource(R.string.uid).asString(context as Context), "")
     }
 
     private fun settingItemType(){
