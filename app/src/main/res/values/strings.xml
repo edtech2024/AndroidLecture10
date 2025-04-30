@@ -22,7 +22,8 @@
     <string name="input_etDescription">Введите описание</string>
     <string name="input_etSearch">Введите запрос</string>
     <string name="filter">Filter</string>
-    <string name="reset">reset</string>
+    <string name="reset">Reset</string>
+    <string name="item_done">Complete</string>
 
     <string name="action">Action</string>
     <string name="id">Id</string>
@@ -37,6 +38,7 @@
     <string name="date">Date</string>
     <string name="datetime">Введите дату и время</string>
     <string name="color">Color</string>
+    <string name="done_dates">Done_dates</string>
 
     <string name="type_1">Type 1</string>
     <string name="type_2">Type 2</string>

@@ -8,7 +8,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentTransaction
-import com.example.myapplicationsixth.presentation.*
 import com.google.android.material.navigation.NavigationView
 
 
@@ -118,6 +117,7 @@ class MainActivity : AppCompatActivity(),
             null,
             null,
             null,
+            null,
             null
         )
         fragmentTransaction.replace(R.id.container, fragmentDetail) // контейнер в активити
@@ -152,6 +152,7 @@ class MainActivity : AppCompatActivity(),
             edit.getString(applicationContext.getString(R.string.period)),
             edit.getString(applicationContext.getString(R.string.frequency)),
             edit.getString(applicationContext.getString(R.string.date)),
+            edit.getString(applicationContext.getString(R.string.done_dates)),
             edit.getString(applicationContext.getString(R.string.color))
         )
         fragmentTransaction.replace(R.id.container, fragmentDetail)
