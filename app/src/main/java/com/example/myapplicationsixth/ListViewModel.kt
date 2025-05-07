@@ -3,7 +3,10 @@ package com.example.myapplicationsixth
 import androidx.lifecycle.*
 import com.example.domain.Item
 import com.example.domain.UseCase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
@@ -26,6 +29,12 @@ class ListViewModel @Inject constructor(
     var itemsListType2: LiveData<List<Item>> = mediatorType2
 
     init {
+
+        viewModelScope.launch(Dispatchers.IO) {
+            withContext(NonCancellable) {
+                useCase.refreshItems()
+            }
+        }
 
         mediatorType1.addSource(liveDataType1) { source ->
             tempListType1.addAll(source)
@@ -81,7 +90,7 @@ class ListViewModel @Inject constructor(
 
     fun itemDone(item: Item) {
         viewModelScope.launch {
-            useCase.itemPressed(item)
+            useCase.itemPressedDone(item)
         }
     }
 

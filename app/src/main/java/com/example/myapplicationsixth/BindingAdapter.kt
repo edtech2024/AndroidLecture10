@@ -6,7 +6,7 @@ import com.example.domain.Item
 
 
 @BindingAdapter("itemsListType1")
-fun setItemsList1(recyclerView: RecyclerView, itemsListType1: List<com.example.domain.Item>?) {
+fun setItemsList1(recyclerView: RecyclerView, itemsListType1: List<Item>?) {
 
     val itemAdapter: ItemAdapter = recyclerView.adapter as ItemAdapter
 
@@ -17,7 +17,7 @@ fun setItemsList1(recyclerView: RecyclerView, itemsListType1: List<com.example.d
 }
 
 @BindingAdapter("itemsListType2")
-fun setItemsList2(recyclerView: RecyclerView, itemsListType2: List<com.example.domain.Item>?) {
+fun setItemsList2(recyclerView: RecyclerView, itemsListType2: List<Item>?) {
     val itemAdapter: ItemAdapter = recyclerView.adapter as ItemAdapter
 
     if (itemsListType2 != null) {

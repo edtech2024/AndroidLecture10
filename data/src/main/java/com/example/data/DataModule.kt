@@ -9,8 +9,8 @@ import kotlinx.coroutines.Dispatchers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.Retrofit.Builder
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 import javax.inject.Singleton
 
 
@@ -33,6 +33,7 @@ class DataModule {
     ): OkHttpClient = OkHttpClient.Builder()
         .addInterceptor(authInterceptor)
         .addInterceptor(httpLoggingInterceptor)
+        .retryOnConnectionFailure(true)
         .build()
 
     @Singleton
@@ -41,21 +42,12 @@ class DataModule {
 
     @Singleton
     @Provides
-    fun provideConverterFactory(): GsonConverterFactory = GsonConverterFactory.create()
-
-    @Singleton
-    @Provides
-    fun provideRetrofitBuilder(BASE_URL: String,
-                               gsonConverterFactory: GsonConverterFactory
-    ): Retrofit.Builder = Retrofit.Builder()
+    fun provideAuthApiService(BASE_URL: String,
+                              okHttpClient: OkHttpClient
+    ): ItemApiInterface = Retrofit.Builder()
         .baseUrl(BASE_URL)
+        .addConverterFactory(ScalarsConverterFactory.create())
         .addConverterFactory(GsonConverterFactory.create())
-
-    @Singleton
-    @Provides
-    fun provideAuthApiService(okHttpClient: OkHttpClient,
-                              retrofit: Builder
-    ): ItemApiInterface = retrofit
         .client(okHttpClient)
         .build()
         .create(ItemApiInterface::class.java)
@@ -70,13 +62,19 @@ class DataModule {
 
     @Singleton
     @Provides
+    fun provideRefreshIntervalMs(): Long = 50000
+
+    @Singleton
+    @Provides
     fun provideRepositoryImpl(database: ItemDatabase,
                               itemApiService: ItemApiInterface,
-                              dispatcher: CoroutineDispatcher
+                              dispatcher: CoroutineDispatcher,
+                              refreshIntervalMs: Long
     ): ItemRepository = ItemRepositoryImpl(
         database.itemDao(),
         itemApiService,
-        dispatcher
+        dispatcher,
+        refreshIntervalMs
     )
 
 }

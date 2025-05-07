@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.domain.Item
 import com.example.domain.StringValue
 import com.example.domain.UseCase
 import kotlinx.coroutines.Dispatchers
@@ -91,7 +92,7 @@ class DetailViewModel @Inject constructor(val useCase: UseCase, val bundle: Bund
     override fun onCleared() {}
 
     // Launching a new coroutine to insert the data in a non-blocking way
-    private fun clickButtonCreateItem(item: com.example.domain.Item){
+    private fun clickButtonCreateItem(item: Item){
         viewModelScope.launch(Dispatchers.IO) {
             withContext(NonCancellable) {
                 useCase.create(item)
@@ -100,7 +101,7 @@ class DetailViewModel @Inject constructor(val useCase: UseCase, val bundle: Bund
     }
 
     // Launching a new coroutine to update the data in a non-blocking way
-    private fun clickButtonUpdateItem(item: com.example.domain.Item){
+    private fun clickButtonUpdateItem(item: Item){
         viewModelScope.launch(Dispatchers.IO) {
             withContext(NonCancellable) {
                 useCase.update(item)
@@ -116,9 +117,9 @@ class DetailViewModel @Inject constructor(val useCase: UseCase, val bundle: Bund
         }
     }
 
-    private fun makeItem(): com.example.domain.Item {
+    private fun makeItem(): Item {
 
-        val item = com.example.domain.Item(id = null, uid = argUid,
+        val item = Item(id = argId, uid = argUid,
             title = argTitle, description = argDescription,
             priority = argPriority,
             type = argType.toInt(),

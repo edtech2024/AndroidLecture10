@@ -76,7 +76,7 @@ class ListFragmentType1 : Fragment() {
         binding.rvListType1.layoutManager = LinearLayoutManager(this.context)
         this.itemAdapterType1 = ItemAdapter(
             { item -> onItemClicked(item) },
-            { item -> onButtonClicked(item) }
+            { item -> onButtonDoneClicked(item) }
         )
         binding.rvListType1.adapter = itemAdapterType1
     }
@@ -106,7 +106,7 @@ class ListFragmentType1 : Fragment() {
         args.putString(getString(R.string.type), item.type.toString())
         args.putString(getString(R.string.count), item.count.toString())
         args.putString(getString(R.string.frequency), item.frequency!!.toString())
-        args.putString(getString(R.string.uid), item.uid!!.toString())
+        args.putString(getString(R.string.uid), item.uid.toString())
         args.putString(getString(R.string.date), item.date!!.toString())
         args.putString(getString(R.string.done_dates), item.done_dates!!.toString())
         args.putString(getString(R.string.color), item.color!!.toString())
@@ -114,7 +114,7 @@ class ListFragmentType1 : Fragment() {
         onEditClicked(args)
     }
 
-    private fun onButtonClicked(item: Item){
+    private fun onButtonDoneClicked(item: Item){
         // Create a new coroutine in the lifecycleScope
         viewLifecycleOwner.lifecycleScope.launch {
             // repeatOnLifecycle launches the block in a new coroutine every time the

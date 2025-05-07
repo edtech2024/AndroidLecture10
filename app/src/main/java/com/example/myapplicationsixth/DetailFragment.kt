@@ -25,7 +25,6 @@ class DetailFragment : Fragment() {
         private const val PRIORITY = "Priority"
         private const val TYPE = "TYPE"
         private const val COUNT = "Count"
-        private const val PERIOD = "Period"
         private const val UID = "Uid"
         private const val FREQUENCY = "Frequency"
         private const val COLOR = "Color"
@@ -36,7 +35,7 @@ class DetailFragment : Fragment() {
             action: String?, id: Int, uid: String?,
             title: String?, description: String?,
             priority: String?, type: String?,
-            count: String?, period: String?,
+            count: String?,
             frequency: String?, color: String?, date: String?, done_dates: String?
         ): DetailFragment {
             val fragmentDetail = DetailFragment()
@@ -49,7 +48,6 @@ class DetailFragment : Fragment() {
             args.putString(PRIORITY, priority)
             args.putString(TYPE, type)
             args.putString(COUNT, count)
-            args.putString(PERIOD, period)
             args.putString(UID, uid)
             args.putString(FREQUENCY, frequency)
             args.putString(COLOR, color)

@@ -9,7 +9,7 @@ class AuthInterceptor() : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
 
         val request = chain.request().newBuilder()
-            .addHeader("Authorization","2d97702c-c47f-4316-8c8c-7f17a7c36dd3")
+            .addHeader("Authorization","391afa64-5c4e-470a-88f1-c01099ad155d")
             .addHeader("Accept", "application/json")
             .addHeader("Content-Type", "application/json")
             .build()

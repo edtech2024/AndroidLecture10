@@ -1,13 +1,15 @@
 package com.example.domain
 
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.*
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
 class UseCase @Inject constructor(val repository: ItemRepository) {
 
-    suspend fun changeCount(item: Item): Item {
+    private fun changeCount(item: Item): Item {
         var changeItem = item
         if (changeItem.count!! > 0) {
             changeItem.count = changeItem.count?.minus(1)
@@ -18,36 +20,49 @@ class UseCase @Inject constructor(val repository: ItemRepository) {
         return changeItem
     }
 
-    suspend fun itemPressed(item: Item) {
+    suspend fun itemPressedDone(item: Item) {
         repository.completeItem(item)
-        repository.editItem(changeCount(item))
-        repository.requestItems()
-        repository.deleteItems()
-        repository.insertItems(repository.itemList.value!!)
+        changeCount(item)
+        repository.updateItem(item)
+        repository.editItem(item)
     }
 
     fun queryLocalItemsType(type: Int): Flow<List<Item>> {
         return repository.queryItemsTypefromDatabase(type)
     }
 
-    suspend fun create(item: Item){
-        repository.addItem(item)
-        repository.requestItems()
-        repository.deleteItems()
-        repository.itemList.value?.let { repository.insertItems(it) }
+    suspend fun create(item: Item) {
+
+        var keyFromDatabase = repository.insertItem(item)
+        var jsonStr = repository.addItem(item)
+        var itemUid: ItemUid = Json.decodeFromString<ItemUid>(jsonStr.first())
+        var keyFromServer = itemUid.uid
+
+        repository.updateItem(
+            setUid(keyFromDatabase, keyFromServer, item)
+        )
+
     }
 
-    suspend fun update(item: Item){
+    private fun setUid(id: Long, uid: String, item: Item): Item {
+        var changeUidItem: Item = item
+        changeUidItem.uid = uid
+        changeUidItem.id = id.toInt()
+        return changeUidItem
+    }
+
+    suspend fun update(item: Item) {
+        repository.updateItem(item)
         repository.editItem(item)
-        repository.requestItems()
-        repository.deleteItems()
-        repository.itemList.value?.let { repository.insertItems(it) }
     }
 
-    suspend fun requestItems(){
-        repository.requestItems()
-        repository.deleteItems()
-        repository.itemList.value?.let { repository.insertItems(it) }
+    suspend fun refreshItems() {
+        if (repository.getCountRows().first() == 0) {
+            repository.insertItems(repository.itemList.first())
+        }
+        else {
+            repository.updateItems(repository.itemList.first())
+        }
     }
 
 }

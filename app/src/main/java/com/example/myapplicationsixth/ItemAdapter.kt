@@ -36,6 +36,7 @@ class ItemAdapter(
             binding.btnDone.setOnClickListener {
                 onDone(item)
             }
+
         }
     }
 
@@ -56,13 +57,13 @@ class ItemAdapter(
         return currentList.size
     }
 
-    class DiffCallback : DiffUtil.ItemCallback<com.example.domain.Item>() {
+    class DiffCallback : DiffUtil.ItemCallback<Item>() {
 
-        override fun areItemsTheSame(oldItem: com.example.domain.Item, newItem: com.example.domain.Item): Boolean {
+        override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: com.example.domain.Item, newItem: com.example.domain.Item): Boolean {
+        override fun areContentsTheSame(oldItem: Item, newItem: Item): Boolean {
             return oldItem == newItem
         }
     }

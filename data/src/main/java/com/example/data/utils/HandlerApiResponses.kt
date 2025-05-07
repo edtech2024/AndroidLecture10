@@ -23,7 +23,7 @@ object HandlerApiResponses {
                 }
 
             } catch (e: Exception) {
-                ApiResult.Error("Error message")
+                ApiResult.Error("Error message: "+ e.message.toString())
             }
         }
     }

@@ -117,7 +117,6 @@ class MainActivity : AppCompatActivity(),
             null,
             null,
             null,
-            null,
             null
         )
         fragmentTransaction.replace(R.id.container, fragmentDetail) // контейнер в активити
@@ -149,7 +148,6 @@ class MainActivity : AppCompatActivity(),
             edit.getString(applicationContext.getString(R.string.priority)),
             edit.getString(applicationContext.getString(R.string.type)),
             edit.getString(applicationContext.getString(R.string.count)),
-            edit.getString(applicationContext.getString(R.string.period)),
             edit.getString(applicationContext.getString(R.string.frequency)),
             edit.getString(applicationContext.getString(R.string.date)),
             edit.getString(applicationContext.getString(R.string.done_dates)),
