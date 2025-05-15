@@ -3,12 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ListFragmentType2">
+    tools:context=".fragment.ListFragmentType2">
 
     <data>
         <variable
             name = "listViewModel"
-            type = "com.example.myapplicationsixth.ListViewModel" />
+            type = "com.example.myapplicationsixth.viewmodel.ListViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -7,13 +7,13 @@
     <data>
         <variable
             name = "detailViewModel"
-            type = "com.example.myapplicationsixth.DetailViewModel" />
+            type = "com.example.myapplicationsixth.viewmodel.DetailViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".DetailFragment">
+        tools:context=".fragment.DetailFragment">
 
         <TextView
             android:id="@+id/tvAction"

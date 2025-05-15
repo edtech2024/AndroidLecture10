@@ -7,14 +7,14 @@
     <data>
         <variable
             name = "listViewModel"
-            type = "com.example.myapplicationsixth.ListViewModel" />
+            type = "com.example.myapplicationsixth.viewmodel.ListViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/bsdFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".BSDFragment">
+        tools:context=".fragment.BSDFragment">
 
         <EditText
             android:id="@+id/etSearch"

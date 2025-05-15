@@ -7,7 +7,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".AboutAppFragment">
+        tools:context=".fragment.AboutAppFragment">
 
         <TextView
             android:id="@+id/tvAboutApp"
