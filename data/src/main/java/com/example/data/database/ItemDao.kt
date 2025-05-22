@@ -3,6 +3,7 @@ package com.example.data.database
 import androidx.room.*
 import com.example.domain.dataobject.Item
 import kotlinx.coroutines.flow.Flow
+import org.jetbrains.annotations.NotNull
 
 
 @Dao
@@ -15,7 +16,7 @@ interface ItemDao {
     suspend fun insertItems(items: List<Item>)
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun update(item: Item)
+    fun update(item: Item): Int
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateItems(items: List<Item>)

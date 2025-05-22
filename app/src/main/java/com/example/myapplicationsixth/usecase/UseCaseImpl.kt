@@ -1,8 +1,9 @@
-package com.example.domain.usecase
+package com.example.myapplicationsixth.usecase
 
 import com.example.domain.dataobject.Item
 import com.example.domain.dataobject.ItemUid
 import com.example.domain.irepository.ItemRepository
+import com.example.domain.usecase.IUseCase
 import kotlinx.coroutines.flow.*
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
@@ -10,7 +11,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
-open class UseCase @Inject constructor(val repository: ItemRepository) : IUseCase {
+class UseCaseImpl @Inject constructor(val repository: ItemRepository) : IUseCase {
 
     override fun changeCount(item: Item): Item {
         var changeItem = item
@@ -66,7 +67,6 @@ open class UseCase @Inject constructor(val repository: ItemRepository) : IUseCas
         var changeUidItem: Item = item
         //changeUidItem.uid =
         //uid.firstOrNull()?.let{ changeUidItem.uid = it } ?: "default"
-        //uid.lastOrNull()?.let{ changeUidItem.uid = it } ?: "default"
         //uid.collect{ it?.let{ changeUidItem.uid = it } }
         uid.collect { a ->
             if (a.isNullOrEmpty()) {

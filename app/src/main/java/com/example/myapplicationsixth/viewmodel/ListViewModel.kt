@@ -2,6 +2,7 @@ package com.example.myapplicationsixth.viewmodel
 
 import androidx.lifecycle.*
 import com.example.domain.dataobject.Item
+import com.example.domain.usecase.IUseCase
 import com.example.domain.usecase.UseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.NonCancellable
@@ -11,7 +12,7 @@ import javax.inject.Inject
 
 
 class ListViewModel @Inject constructor(
-    val useCase: UseCase
+    val useCase: IUseCase
 ) : ViewModel() {
 
     var argSearch: String = ""
@@ -29,7 +30,10 @@ class ListViewModel @Inject constructor(
     var itemsListType2: LiveData<List<Item>> = mediatorType2
 
     init {
+        loading()
+    }
 
+    fun loading() {
         viewModelScope.launch(Dispatchers.IO) {
             withContext(NonCancellable) {
                 useCase.refreshItems()
@@ -45,7 +49,6 @@ class ListViewModel @Inject constructor(
             tempListType2.addAll(source)
             mediatorType2.setValue(tempListType2)
         }
-
     }
 
     fun applySortMethod() {

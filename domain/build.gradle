@@ -4,6 +4,7 @@ plugins {
     id 'org.jetbrains.kotlin.plugin.serialization'
     id 'kotlin-kapt'
     id 'kotlin-android'
+    id("de.mannodermaus.android-junit5") version "1.10.0.0"
 }
 
 android {
@@ -38,7 +39,7 @@ android {
         dataBinding true
     }
     tasks.withType(Test) {
-        useJUnit()  // JUnit 4
+        useJUnitPlatform()
         testLogging {
             events("passed", "skipped", "failed")
         }
@@ -83,8 +84,21 @@ dependencies {
     kapt 'com.google.dagger:dagger-compiler:2.28.3'
     kapt 'com.google.dagger:dagger-android-processor:2.28.3'
 
-    testImplementation 'junit:junit:4.13.2'
     testImplementation "org.mockito:mockito-core:5.11.0"
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0"
+    testImplementation "org.mockito:mockito-junit-jupiter:5.11.0"
+
+    // (Required) Writing and executing Unit Tests on the JUnit Platform
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.12.2")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.12.2")
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.12.2'
+
+    // (Optional) If you also have JUnit 4-based tests
+    testImplementation("junit:junit:4.13.2")
+    testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.12.2")
+
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1"
+
+    testImplementation 'androidx.arch.core:core-testing:2.1.0'
+
 }

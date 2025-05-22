@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.dataobject.Item
 import com.example.domain.converter.StringValue
+import com.example.domain.usecase.IUseCase
 import com.example.domain.usecase.UseCase
 import com.example.myapplicationsixth.fragment.DetailFragment
 import com.example.myapplicationsixth.R
@@ -18,7 +19,7 @@ import java.util.*
 import javax.inject.Inject
 
 
-class DetailViewModel @Inject constructor(val useCase: UseCase, val bundle: Bundle?, val context: DetailFragment.OnItemCreateUpdateListener?) : ViewModel() {
+class DetailViewModel @Inject constructor(val useCase: IUseCase, val bundle: Bundle?, val context: DetailFragment.OnItemCreateUpdateListener?) : ViewModel() {
 
     var argAction: String? = null
     var argId: Int? = null

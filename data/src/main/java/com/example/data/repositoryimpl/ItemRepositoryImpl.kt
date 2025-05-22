@@ -21,10 +21,9 @@ class ItemRepositoryImpl @Inject constructor(val itemDao: ItemDao,
                                              val refreshIntervalMs: Long
 ) : ItemRepository {
 
-    override var uid: Flow<String> = MutableLiveData("").asFlow().flowOn(dispatcher)
-    override var errorMessage: Flow<String> = MutableLiveData("").asFlow().flowOn(dispatcher)
-
-    override var itemList: Flow<List<Item>> = flow<List<Item>> {
+    var uid: Flow<String> = MutableLiveData("").asFlow().flowOn(dispatcher)
+    var errorMessage: Flow<String> = MutableLiveData("").asFlow().flowOn(dispatcher)
+    var itemList: Flow<List<Item>> = flow<List<Item>> {
         while(true) {
             val response = HandlerApiResponses.safeApiCall(dispatcher) { itemApiService.getHabits() }
             var items: List<Item> = listOf()
@@ -84,8 +83,8 @@ class ItemRepositoryImpl @Inject constructor(val itemDao: ItemDao,
         return itemDao.getCount()
     }
 
-    override suspend fun updateItem(item: Item) {
-        itemDao.update(item)
+    override suspend fun updateItem(item: Item): Flow<Int> {
+        return MutableLiveData(itemDao.update(item)).asFlow()
     }
 
     override fun queryItemsTypefromDatabase(type: Int): Flow<List<Item>> {
@@ -108,20 +107,20 @@ class ItemRepositoryImpl @Inject constructor(val itemDao: ItemDao,
         }
     }
 
-    override suspend fun editItem(item: Item) {
+    override suspend fun editItem(item: Item): Flow<String> {
         val response =  HandlerApiResponses.safeApiCall (dispatcher) {itemApiService.updateHabit(item) }
         when (response){
-            is ApiResult.Success -> uid = MutableLiveData(response.data!!).asFlow()
-            is ApiResult.Error -> errorMessage = MutableLiveData(response.message!!).asFlow()
+            is ApiResult.Success -> return MutableLiveData(response.data!!).asFlow()
+            is ApiResult.Error -> return MutableLiveData(response.message!!).asFlow()
         }
     }
 
-    override suspend fun completeItem(item: Item) {
+    override suspend fun completeItem(item: Item): Flow<String> {
         val newHabitDone: HabitDone = HabitDone(item.date!!, item.uid!!)
         val response =  HandlerApiResponses.safeApiCall (dispatcher) {itemApiService.completeHabit(newHabitDone) }
         when (response){
-            is ApiResult.Success -> uid = MutableLiveData(response.data!!).asFlow()
-            is ApiResult.Error -> errorMessage = MutableLiveData(response.message!!).asFlow()
+            is ApiResult.Success -> return MutableLiveData(response.data!!).asFlow()
+            is ApiResult.Error -> return MutableLiveData(response.message!!).asFlow()
         }
     }
 
