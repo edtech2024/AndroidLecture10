@@ -13,7 +13,7 @@ import com.google.android.material.navigation.NavigationView
 
 
 class MainActivity : AppCompatActivity(),
-    MainFragment.OnItemAddListener,
+    MainFragment.OnItemAddEditListener,
     ListFragmentType1.OnItemEditType1Listener,
     ListFragmentType2.OnItemEditType2Listener,
     DetailFragment.OnItemCreateUpdateListener,
@@ -135,6 +135,12 @@ class MainActivity : AppCompatActivity(),
     // Now we can define the action to take in the activity when the fragment event fires
     // This is implementing the `OnItemEditType2Listener` interface methods
     override fun onEditItemType2(edit: Bundle){
+        onUpdateItem(edit)
+    }
+
+    // Now we can define the action to take in the activity when the fragment event fires
+    // This is implementing the `OnItemEditType2Listener` interface methods
+    override fun onEditItem(edit: Bundle){
         onUpdateItem(edit)
     }
 

@@ -3,18 +3,21 @@ package com.example.myapplicationsixth.viewmodel
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.asLiveData
 import com.example.domain.dataobject.Item
 import com.example.domain.usecase.UseCase
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.test.advanceUntilIdle
-import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.*
 import org.junit.Rule
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.BeforeEach
 
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -149,4 +152,32 @@ class ListViewModelTest {
     @Test
     fun getUseCase() {
     }
+
+    private lateinit var lifeCycleTestOwner: LifeCycleTestOwner
+    private val liveDataObserver: Observer<List<Item>> = mock()
+
+    @BeforeEach
+    fun setUp() {
+
+        /*val testDispatcher = StandardTestDispatcher(mainCoroutineRule.testScheduler)
+        val testScope = TestScope(testDispatcher)*/
+
+        val testDispatcher = UnconfinedTestDispatcher(mainCoroutineRule.testScheduler)
+        Dispatchers.setMain(testDispatcher)
+
+        lifeCycleTestOwner = LifeCycleTestOwner()
+        lifeCycleTestOwner.onCreate()
+
+        listViewModel = ListViewModel(fakeUseCase)
+        listViewModel.itemsListType1.observe(lifeCycleTestOwner, liveDataObserver)
+
+    }
+
+    @AfterEach
+    fun tearDown() {
+        lifeCycleTestOwner.onDestroy()
+
+        Dispatchers.resetMain()
+    }
+
 }
