@@ -28,7 +28,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.compose.navigate
+//import androidx.navigation.compose.navigate
 import com.example.domain.dataobject.Item
 import com.example.domain.usecase.UseCase
 import com.example.myapplicationsixth.adapter.FragmentListStateAdapter
@@ -186,12 +186,12 @@ class MainFragment : Fragment() {
 */
         var state by remember { mutableStateOf(0) }
         val tabs = listOf("TAB 1", "TAB 2")
-        val pagerState = rememberPagerState(pageCount = 2, initialPage = 0)
+        //val pagerState = rememberPagerState(pageCount = 2, initialPage = 0)
         //initialPage = state
         //count = 2
 
         MaterialTheme {
-            HorizontalPager(state = pagerState, modifier = Modifier.fillMaxHeight()) { page ->
+            HorizontalPager(count = 2, modifier = Modifier.fillMaxHeight()) { page ->
                 Column {
                     TabRow(selectedTabIndex = state) {
                         tabs.forEachIndexed { index, title ->
@@ -238,7 +238,7 @@ class MainFragment : Fragment() {
     //onClick: () -> Unit
     @Composable
     fun FirstScreen(data: State<List<Item>>, navController: NavController, onClick: (Item) -> Unit) {
-        Button(onClick = { navController.navigate(Screen.Detail.route) }){
+        Button(onClick = { navController.navigate(MainFragment.Screen.Detail.route) }){
             Text("Click", fontSize = 25.sp)
         }
         LazyColumn(Modifier.fillMaxSize()) {
