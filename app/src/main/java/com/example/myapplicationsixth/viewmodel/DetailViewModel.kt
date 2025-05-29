@@ -2,6 +2,9 @@ package com.example.myapplicationsixth.viewmodel
 
 import android.content.Context
 import android.os.Bundle
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.dataobject.Item
@@ -12,6 +15,9 @@ import com.example.myapplicationsixth.fragment.DetailFragment
 import com.example.myapplicationsixth.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.NonCancellable
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
@@ -123,7 +129,8 @@ class DetailViewModel @Inject constructor(val useCase: IUseCase, val bundle: Bun
     private fun makeItem(): Item {
 
         val item = Item(id = argId, uid = argUid,
-            title = argTitle, description = argDescription,
+            //title = argTitle, description = argDescription,
+            title = title.value, description = argDescription,
             priority = argPriority,
             type = argType.toInt(),
             count = argCount?.toInt(),
@@ -132,7 +139,101 @@ class DetailViewModel @Inject constructor(val useCase: IUseCase, val bundle: Bun
             done_dates = argDoneDatesL
         )
 
+/*        val item = Item(id = argId, uid = argUid,
+            title = title.value, description = description.value,
+            priority = priority.value.toInt(),
+            type = type.value.toInt(),
+            count = count.value.toInt(),
+            frequency = frequency.value.toInt(),
+            color = 0, date = argDate.toString().toLong(),
+            done_dates = argDoneDatesL
+        )*/
+
         return item
+    }
+
+    private val _action: MutableStateFlow<String> = MutableStateFlow("")
+    val action: StateFlow<String> = _action.asStateFlow()
+
+    fun setAction(action: String) {
+        _action.value = action
+    }
+
+    private val _id: MutableStateFlow<String> = MutableStateFlow("")
+    val id: StateFlow<String> = _id.asStateFlow()
+
+    fun setId(id: String) {
+        _id.value = id
+    }
+
+    private val _uid: MutableStateFlow<String> = MutableStateFlow("")
+    val uid: StateFlow<String> = _uid.asStateFlow()
+
+    fun setUid(uid: String) {
+        _uid.value = uid
+    }
+
+    private val _title: MutableStateFlow<String> = MutableStateFlow("Title")
+    val title: StateFlow<String> = _title.asStateFlow()
+
+    fun setTitle(title: String) {
+        _title.value = title
+    }
+
+    private val _description: MutableStateFlow<String> = MutableStateFlow("Description")
+    val description: StateFlow<String> = _description.asStateFlow()
+
+    fun setDescription(description: String) {
+        _description.value = description
+    }
+
+    private val _priority: MutableStateFlow<String> = MutableStateFlow("0")
+    val priority: StateFlow<String> = _priority.asStateFlow()
+
+    fun setPriority(priority: String) {
+        _priority.value = priority
+    }
+
+    private val _type: MutableStateFlow<String> = MutableStateFlow("0")
+    val type: StateFlow<String> = _type.asStateFlow()
+
+    fun setType(type: String) {
+        _type.value = type
+    }
+
+    private val _count: MutableStateFlow<String> = MutableStateFlow("0")
+    val count: StateFlow<String> = _count.asStateFlow()
+
+    fun setCount(count: String) {
+        _count.value = count
+    }
+
+    private val _frequency: MutableStateFlow<String> = MutableStateFlow("0")
+    val frequency: StateFlow<String> = _frequency.asStateFlow()
+
+    fun setFrequency(frequency: String) {
+        _frequency.value = frequency
+    }
+
+    private val _color: MutableStateFlow<String> = MutableStateFlow("0")
+    val color: StateFlow<String> = _color.asStateFlow()
+
+    fun setColor(color: String) {
+        _color.value = color
+    }
+
+    private val _date: MutableStateFlow<String> = MutableStateFlow("")
+    val date: StateFlow<String> = _date.asStateFlow()
+
+    fun setDate(date: String) {
+        _date.value = date
+    }
+
+    private val _done_dates: MutableStateFlow<String> = MutableStateFlow("")
+    val done_dates: StateFlow<String> = _done_dates.asStateFlow()
+
+    fun setDone_dates(done_dates: String) {
+        _done_dates.value = done_dates
     }
 
 }

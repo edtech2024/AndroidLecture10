@@ -216,7 +216,6 @@ class MainFragment : Fragment() {
 
     sealed class Screen(var route: String) {
         object FirstScreen : Screen("first")
-        object SecondScreen : Screen("second")
         object Detail : Screen("detail")
     }
 
@@ -248,7 +247,7 @@ class MainFragment : Fragment() {
                     navController.navigate("detail")
                 })*/
                 //ListItem(it)
-                ListItem(it, navController = navController, onClick = onClick)
+                ListItem(it, navController = navController, onClick = onClick )
                 //ListItem(it, onClick = onClick)
             }
         }

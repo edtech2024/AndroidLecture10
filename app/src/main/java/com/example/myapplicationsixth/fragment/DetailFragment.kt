@@ -15,6 +15,7 @@ import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -193,83 +194,83 @@ class DetailFragment : Fragment() {
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
 
-                    val id = remember { mutableStateOf("") }
-                    val uid = remember { mutableStateOf("") }
-                    val title = remember { mutableStateOf("") }
-                    val description = remember { mutableStateOf("") }
-                    val priority = remember { mutableStateOf("") }
-                    val type = remember { mutableStateOf("") }
-                    val count = remember { mutableStateOf("") }
-                    val frequency = remember { mutableStateOf("") }
-                    val color = remember { mutableStateOf("") }
-                    val date = remember { mutableStateOf("") }
-                    val done_dates = remember { mutableStateOf("") }
+                    val id = detailViewModel.id.collectAsState()
+                    val uid = detailViewModel.uid.collectAsState()
+                    val title = detailViewModel.title.collectAsState()
+                    val description = detailViewModel.description.collectAsState()
+                    val priority = detailViewModel.priority.collectAsState()
+                    val type = detailViewModel.type.collectAsState()
+                    val count = detailViewModel.count.collectAsState()
+                    val frequency = detailViewModel.frequency.collectAsState()
+                    val color = detailViewModel.color.collectAsState()
+                    val date = detailViewModel.date.collectAsState()
+                    val done_dates =  detailViewModel.color.collectAsState()
 
                     Text(text = "Detail screen")
 
                     OutlinedTextField(
                         value = id.value,
-                        onValueChange = { id.value = it },
+                        onValueChange = { detailViewModel.setId(it) },
                         label = { Text(text = "id") }
                     )
 
                     OutlinedTextField(
                         value = uid.value,
-                        onValueChange = { uid.value = it },
+                        onValueChange = { detailViewModel.setUid(it) },
                         label = { Text(text = "uid") }
                     )
 
                     OutlinedTextField(
                         value = title.value,
-                        onValueChange = { title.value = it },
+                        onValueChange = { detailViewModel.setTitle(it) },
                         label = { Text(text = "title") }
                     )
 
                     OutlinedTextField(
                         value = description.value,
-                        onValueChange = { description.value = it },
+                        onValueChange = { detailViewModel.setDescription(it) },
                         label = { Text(text = "description") }
                     )
 
                     OutlinedTextField(
                         value = priority.value,
-                        onValueChange = { priority.value = it },
+                        onValueChange = { detailViewModel.setPriority(it) },
                         label = { Text(text = "priority") }
                     )
 
                     OutlinedTextField(
                         value = type.value,
-                        onValueChange = { type.value = it },
+                        onValueChange = { detailViewModel.setType(it) },
                         label = { Text(text = "type") }
                     )
 
                     OutlinedTextField(
                         value = count.value,
-                        onValueChange = { count.value = it },
+                        onValueChange = { detailViewModel.setCount(it) },
                         label = { Text(text = "count") }
                     )
 
                     OutlinedTextField(
                         value = frequency.value,
-                        onValueChange = { frequency.value = it },
+                        onValueChange = { detailViewModel.setFrequency(it) },
                         label = { Text(text = "frequency") }
                     )
 
                     OutlinedTextField(
                         value = color.value,
-                        onValueChange = { color.value = it },
+                        onValueChange = { detailViewModel.setColor(it) },
                         label = { Text(text = "color") }
                     )
 
                     OutlinedTextField(
                         value = date.value,
-                        onValueChange = { date.value = it },
+                        onValueChange = { detailViewModel.setDate(it) },
                         label = { Text(text = "date") }
                     )
 
                     OutlinedTextField(
                         value = done_dates.value,
-                        onValueChange = { done_dates.value = it },
+                        onValueChange = { detailViewModel.setDone_dates(it) },
                         label = { Text(text = "done_dates") }
                     )
 
